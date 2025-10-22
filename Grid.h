@@ -30,6 +30,7 @@ public:
         #endif
     }
 
+    // Display the grid in the console
     void displayGrid() {
         clearConsole();
         for (int r = 0; r < rows; r++) {
@@ -39,6 +40,7 @@ public:
             cout << endl;
         }
     }
+    
     void update(){
 
     }

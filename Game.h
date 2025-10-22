@@ -25,22 +25,23 @@ public:
         this->towers = towers;
         cout << "Place 5 towers in the grid (not in the top 2 rows and castle cell)" << endl;
         int tower_num = 0;
-        //int col_num = 0;
 
         while ( tower_num < 5 ) {
-            cout << "Enter row number: " << endl;
+            cout << "Enter row number of tower " << tower_num + 1 << endl;
             int row;
             cin >> row;
             if (row >= 2 && row <= 19) {
                 bool legal_col = false;
                 while (!legal_col) {
-                    cout << "Enter column number: " << endl;
+                    cout << "Enter column number of tower " << tower_num + 1 << endl;
                     int col;
                     cin >> col;
                     if (col >= 0 && col <= 19) {
                         Tower tower(row, col);
                         *(this->towers + tower_num) = tower;
                         battlefield.grid[tower.row][tower.col] = 'T';
+                        battlefield.clearConsole();
+                        battlefield.displayGrid();
                         tower_num ++;
                         legal_col = true;
                     } else {
