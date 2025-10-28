@@ -40,6 +40,14 @@ public:
             cout << endl;
         }
     }
+
+    bool isCellEmpty(int r, int c){
+        if (grid[r][c] != '.'){
+            return false;
+        }
+
+        return true;
+    }
     
     void update(){
 

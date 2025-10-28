@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Castle.h"
-//#include "Enemy.h"
+#include "Enemy.h"
 #include "Tower.h"
-//#include "AI.h"
 #include "Grid.h"
 #include "Game.h"
+#include "AI.h"
 using namespace std;
 
 int main()
@@ -18,6 +18,8 @@ int main()
 
     game.init_game();
     game.place_tower(towers);
+
+    int wave_number = 0;
 
     return 0;
 }

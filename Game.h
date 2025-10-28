@@ -6,24 +6,25 @@ using namespace std;
 class Game 
 {
 public:
-    Grid battlefield;
+    Grid field;
     Castle castle;
     Tower* towers;
+    Enemy enemy;
 
-    Game(Grid grid, Castle castle){
-        this->battlefield = battlefield;
+    Game(Grid &field, Castle &castle){
+        this->field = field;
         this->castle = castle;
     }
 
     void init_game(){
-        battlefield.initGrid();
-        battlefield.grid[castle.row][castle.col] = 'C';
-        battlefield.displayGrid();
+        field.initGrid();
+        field.grid[castle.row][castle.col] = 'C';
+        field.displayGrid();
     }  
 
     void place_tower(Tower towers[5]){
         this->towers = towers;
-        cout << "Place 5 towers in the grid (not in the top 2 rows and castle cell)" << endl;
+        cout << "Place 5 towers in the grid (not in the top 2 rows and the castle cell)" << endl;
         int tower_num = 0;
 
         while ( tower_num < 5 ) {
@@ -39,9 +40,9 @@ public:
                     if (col >= 0 && col <= 19) {
                         Tower tower(row, col);
                         *(this->towers + tower_num) = tower;
-                        battlefield.grid[tower.row][tower.col] = 'T';
-                        battlefield.clearConsole();
-                        battlefield.displayGrid();
+                        field.grid[tower.row][tower.col] = 'T';
+                        field.clearConsole();
+                        field.displayGrid();
                         tower_num ++;
                         legal_col = true;
                     } else {
@@ -54,7 +55,35 @@ public:
                 continue;
             }
         }
-        this->battlefield.displayGrid();
+        this->field.displayGrid();
+    }
+
+    /*
+    bool isCellEmpty(int r, int c){
+        bool emptycell = true;
+        if (field.grid[r][c] != '.'){
+            emptycell = false;
+        }
+
+        return emptycell;
+    }
+    */
+
+    void move_enemy(Enemy &e){
+        char* position = &field.grid[e.row][e.col];
+        if (e.row < 19){
+            if (field.isCellEmpty(e.row + 1, e.col)){
+                e.row++;
+            } else if (e.col > 0 && field.isCellEmpty(e.row + 1, e.col - 1)){
+                e.row++;
+                e.col--;
+            } else if (e.col < 19 && field.isCellEmpty(e.row + 1, e.col + 1)){
+                e.row++;
+                e.col++;
+            }
+            *position = '.';
+            field.grid[e.row][e.col] = 'E';
+        }
     }
 };
 
