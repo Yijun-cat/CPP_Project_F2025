@@ -47,6 +47,15 @@ public:
         }
         return true;
     }
+
+    bool isCellNearTower(Tower* towers, int c){
+        for (int i = 0; i < 5; i++){
+            if (abs(towers[i].getCol() - c) < 3){
+                return true;
+            }
+        }
+        return false;
+    }
     
     void update(){
 

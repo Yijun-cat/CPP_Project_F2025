@@ -6,44 +6,33 @@ using namespace std;
 class Game 
 {
 public:
-    Grid field;
-    Castle castle;
-    Tower* towers;
-    Enemy enemy;
-
-    Game(Grid &field, Castle &castle){
-        this->field = field;
-        this->castle = castle;
-    }
-
-    void init_game(){
+    void init_game(Grid &field, Castle &castle){
         field.initGrid();
         field.grid[castle.getRow()][castle.getCol()] = 'C';
         field.displayGrid();
     }  
 
-    void place_tower(Tower towers[5]){
-        this->towers = towers;
+    void place_tower(Grid &field, Tower* towers){
         cout << "Place 5 towers in the grid (not in the top 2 rows and the castle cell)" << endl;
-        int tower_num = 0;
+        int towerNum = 0;
 
-        while ( tower_num < 5 ) {
-            cout << "Enter row number of tower " << tower_num + 1 << endl;
+        while ( towerNum < 5 ) {
+            cout << "Enter row number of tower " << towerNum + 1 << endl;
             int row;
             cin >> row;
             if (row >= 2 && row <= 19) {
                 bool legal_col = false;
                 while (!legal_col) {
-                    cout << "Enter column number of tower " << tower_num + 1 << endl;
+                    cout << "Enter column number of tower " << towerNum + 1 << endl;
                     int col;
                     cin >> col;
-                    if (col >= 0 && col <= 19) {
+                    if (col >= 0 && col <= 19 && field.isCellEmpty(row, col)){
                         Tower tower(row, col);
-                        *(this->towers + tower_num) = tower;
+                        *(towers + towerNum) = tower;
                         field.grid[tower.getRow()][tower.getCol()] = 'T';
                         field.clearConsole();
                         field.displayGrid();
-                        tower_num ++;
+                        towerNum ++;
                         legal_col = true;
                     } else {
                         cout << "This column number is not allowed, try another one" << endl;
@@ -55,10 +44,10 @@ public:
                 continue;
             }
         }
-        this->field.displayGrid();
+        field.displayGrid();
     }
 
-    void move_enemy(Enemy &e){
+    void move_enemy(Grid &field, Enemy &e){
         char* position = &field.grid[e.row][e.col];
         if (e.row < 19){
             if (field.isCellEmpty(e.row + 1, e.col)){
@@ -73,6 +62,10 @@ public:
             *position = '.';
             field.grid[e.row][e.col] = 'E';
         }
+    }
+
+    void runGame(){
+        srand(0);
     }
 };
 

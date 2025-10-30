@@ -9,15 +9,19 @@ using namespace std;
 
 int main()
 {
-    // Initiate the battle field
+    // Initate game objects
     Grid grid;
     Castle castle;
     Tower towers[5];
 
-    Game game(grid, castle);
+    // Initate game management objects
+    Game myGame;
+    AI myAI;
 
-    game.init_game();
-    game.place_tower(towers);
+    //Initiate the game, create the grid and place 5 towers
+    myGame.init_game(grid, castle);
+    myGame.place_tower(grid, towers);
+
 
     int wave_number = 0;
 

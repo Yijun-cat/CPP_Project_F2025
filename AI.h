@@ -11,22 +11,13 @@ private:
 public:
     int total_enemies = 0;
 
-    void spawnEnemies(int wave_number){
-        int spawned = 0;
-        srand(time(0));
-        while (spawned < enemiesPerWave){
-            
+    void spawnEnemy(Grid &field){
+        int col = rand() % 20;
+        if (field.isCellEmpty(0, col) && !field.isCellNearTower(0, col)){
+            field.grid[0][col] = 'E';
         }
     }
 
-    bool isCellNearTower(Tower towers[], int c){
-        for (int i = 0; i < sizeof(towers)/sizeof(towers[0]); i++){
-            if (abs(towers[i].getCol() - c) < 3){
-                return true;
-            }
-        }
-        return false;
-    }
 
     void adjustDifficulty(int playerScore){
 

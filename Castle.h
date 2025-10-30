@@ -11,6 +11,13 @@ public:
     Castle (int r = 19, int c = 9) : StaticObject(r, c){
         this->health = 100;
     }
+
+    bool isDestoryed(){
+        if (this->health <= 0){
+            return true;
+        }
+        return false;
+    }
 };
 
 #endif
