@@ -45,7 +45,6 @@ public:
         if (grid[r][c] != '.'){
             return false;
         }
-
         return true;
     }
     

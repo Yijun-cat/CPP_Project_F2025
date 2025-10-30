@@ -18,7 +18,7 @@ public:
 
     void init_game(){
         field.initGrid();
-        field.grid[castle.row][castle.col] = 'C';
+        field.grid[castle.getRow()][castle.getCol()] = 'C';
         field.displayGrid();
     }  
 
@@ -40,7 +40,7 @@ public:
                     if (col >= 0 && col <= 19) {
                         Tower tower(row, col);
                         *(this->towers + tower_num) = tower;
-                        field.grid[tower.row][tower.col] = 'T';
+                        field.grid[tower.getRow()][tower.getCol()] = 'T';
                         field.clearConsole();
                         field.displayGrid();
                         tower_num ++;
@@ -57,17 +57,6 @@ public:
         }
         this->field.displayGrid();
     }
-
-    /*
-    bool isCellEmpty(int r, int c){
-        bool emptycell = true;
-        if (field.grid[r][c] != '.'){
-            emptycell = false;
-        }
-
-        return emptycell;
-    }
-    */
 
     void move_enemy(Enemy &e){
         char* position = &field.grid[e.row][e.col];

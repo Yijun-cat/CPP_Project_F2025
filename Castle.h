@@ -1,17 +1,14 @@
 #ifndef CASTLE_H_
 #define CASTLE_H_
 #include <iostream>
-using namespace std;
+#include "StaticObject.h"
 
-class Castle 
+class Castle : public StaticObject
 {
-public:
-    int row, col;
+private:
     int health;
-
-    Castle(int row = 19, int col = 9) {
-        this->row = row;
-        this->col = col;
+public:
+    Castle (int r = 19, int c = 9) : StaticObject(r, c){
         this->health = 100;
     }
 };

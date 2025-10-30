@@ -1,21 +1,15 @@
 #ifndef TOWER_H_
 #define TOWER_H_
 #include <iostream>
-#include "Enemy.h"
-using namespace std;
+#include "StaticObject.h"
 
-class Tower 
+class Tower : public StaticObject
 {   
 public:
-    int row, col;
+    Tower(int r = 2, int c = 0) : StaticObject(r, c){}
 
-    Tower(int row = 2, int col = 0) {
-        this->row = row;
-        this->col = col;
-    }
-
-    void attack(Enemy &e) {
-        if(abs(row-e.row) <=2 && abs(col-e.col) <=2) {
+    void attack(Enemy &e){
+        if (abs(getRow()-e.row) <=2 && abs(getCol()-e.col) <=2){
             e.health --;
         }
     }
@@ -26,8 +20,7 @@ public:
 
     void specialAttack(){
         
-    }
-    
+    } 
 };
 
 #endif
