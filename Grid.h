@@ -56,11 +56,6 @@ public:
         }
         return false;
     }
-    
-    void update(){
-
-    }
-
 };
 
 #endif

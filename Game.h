@@ -5,6 +5,9 @@ using namespace std;
 
 class Game 
 {
+private:
+    int waveNumber = 5;
+    int enemiesPerWave = 10;
 public:
     void init_game(Grid &field, Castle &castle){
         field.initGrid();
@@ -64,9 +67,7 @@ public:
         }
     }
 
-    void runGame(){
-        srand(0);
-    }
+
 };
 
 #endif

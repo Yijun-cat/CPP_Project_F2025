@@ -22,8 +22,8 @@ int main()
     myGame.init_game(grid, castle);
     myGame.place_tower(grid, towers);
 
-
     int wave_number = 0;
+    int spawned = 0;
 
     return 0;
 }
