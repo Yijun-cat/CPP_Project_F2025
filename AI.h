@@ -10,16 +10,19 @@ private:
     int total_enemies = 50;
 public:
 
-    void spawnEnemy(Grid &field, Tower* towers){
+    int spawnEnemy(Grid &field, Tower* towers){
         int search = 0;
         while (search < 20){
             int col = rand() % 20;
             if (field.isCellEmpty(0, col) && !field.isCellNearTower(towers, col)){
                 field.grid[0][col] = 'E';
-                break;
+                return col;
             }
             search++;
-            field.grid[0][col] = 'E'; 
+            field.grid[0][col] = 'E';
+            if (search == 20){
+                return col;
+            }
         }
     }
 

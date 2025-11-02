@@ -22,8 +22,24 @@ int main()
     myGame.init_game(grid, castle);
     myGame.place_tower(grid, towers);
 
-    int wave_number = 0;
+    int wave = 0;
     int spawned = 0;
+
+    while (wave < 5){
+        Enemy enemies[10] = {};
+
+        for (int i = 0; i < 10; i++){
+            if (enemies[i].is_spawned){
+                myGame.move_enemy(grid, enemies[i]);
+            }
+        }
+        grid.displayGrid();
+
+        if (spawned < 10){
+            enemies[spawned].row = 0;
+            enemies[spawned].col = myAI.spawnEnemy(grid, towers);
+        }
+    }
 
     return 0;
 }

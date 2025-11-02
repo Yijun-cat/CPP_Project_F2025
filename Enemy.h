@@ -17,16 +17,14 @@ public:
         this->speed = 1;
         this->is_spawned = false;
     }
-};
 
-class fastEnemy : public Enemy 
-{
+    void beFast(){
+        this->speed = 2;
+    }
 
-};
-
-class strongEnemy : public Enemy
-{
-
+    void beStrong(){
+        this->health = 4;
+    }
 };
 
 #endif

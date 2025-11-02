@@ -52,10 +52,6 @@ public:
             setRange(4);
         } 
     }
-
-    void specialAttack(){
-        
-    } 
 };
 
 #endif

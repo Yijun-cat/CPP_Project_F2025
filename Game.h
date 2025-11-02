@@ -54,16 +54,47 @@ public:
         char* position = &field.grid[e.row][e.col];
         if (e.row < 19){
             if (field.isCellEmpty(e.row + 1, e.col)){
-                e.row++;
+                if (e.speed != 2){
+                    e.row++;
+                } else {
+                    if (e.row < 18 && field.isCellEmpty(e.row + 2, e.col)){
+                        e.row += 2;
+                    } else {
+                        e.row++;
+                    }
+                }
             } else if (e.col > 0 && field.isCellEmpty(e.row + 1, e.col - 1)){
-                e.row++;
-                e.col--;
+                if (e.speed != 2){
+                    e.row++;
+                    e.col--;
+                } else {
+                    if (e.row < 18 && e.col > 1 && field.isCellEmpty(e.row + 2, e.col - 2)){
+                        e.row += 2;
+                        e.col -= 2;
+                    } else {
+                        e.row++;
+                        e.col--;
+                    }
+                }
             } else if (e.col < 19 && field.isCellEmpty(e.row + 1, e.col + 1)){
-                e.row++;
-                e.col++;
+                if (e.speed != 2){
+                    e.row++;
+                    e.col++;
+                } else {
+                    if (e.row < 18 && e.col < 18 && field.isCellEmpty(e.row + 2, e.col + 2)){
+                        e.row += 2;
+                        e.col += 2;
+                    } else {
+                        e.row++;
+                        e.col++;
+                    }
+                }
             }
             *position = '.';
             field.grid[e.row][e.col] = 'E';
+            if (e.row == 19){
+                field.grid[e.row][e.col] = '.';
+            }
         }
     }
 
