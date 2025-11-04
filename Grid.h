@@ -2,6 +2,8 @@
 #define GRID_H_
 #include <iostream>
 #include <cstdlib>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 class Grid 
@@ -39,6 +41,7 @@ public:
             }
             cout << endl;
         }
+        this_thread::sleep_for(chrono::milliseconds(100));
     }
 
     bool isCellEmpty(int r, int c){

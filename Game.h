@@ -15,6 +15,14 @@ public:
         field.displayGrid();
     }  
 
+    int get_waveNumber(){
+        return this->waveNumber;
+    }
+
+    int get_enemiesPerWave(){
+        return this->enemiesPerWave;
+    }
+
     void place_tower(Grid &field, Tower* towers){
         cout << "Place 5 towers in the grid (not in the top 2 rows and the castle cell)" << endl;
         int towerNum = 0;
@@ -50,55 +58,53 @@ public:
         field.displayGrid();
     }
 
-    void move_enemy(Grid &field, Enemy &e){
+    void moveEnemy(Grid &field, Enemy &e){
         char* position = &field.grid[e.row][e.col];
-        if (e.row < 19){
-            if (field.isCellEmpty(e.row + 1, e.col)){
-                if (e.speed != 2){
-                    e.row++;
-                } else {
-                    if (e.row < 18 && field.isCellEmpty(e.row + 2, e.col)){
-                        e.row += 2;
-                    } else {
-                        e.row++;
-                    }
-                }
-            } else if (e.col > 0 && field.isCellEmpty(e.row + 1, e.col - 1)){
-                if (e.speed != 2){
-                    e.row++;
-                    e.col--;
-                } else {
-                    if (e.row < 18 && e.col > 1 && field.isCellEmpty(e.row + 2, e.col - 2)){
-                        e.row += 2;
-                        e.col -= 2;
-                    } else {
-                        e.row++;
-                        e.col--;
-                    }
-                }
-            } else if (e.col < 19 && field.isCellEmpty(e.row + 1, e.col + 1)){
-                if (e.speed != 2){
-                    e.row++;
-                    e.col++;
-                } else {
-                    if (e.row < 18 && e.col < 18 && field.isCellEmpty(e.row + 2, e.col + 2)){
-                        e.row += 2;
-                        e.col += 2;
-                    } else {
-                        e.row++;
-                        e.col++;
-                    }
-                }
-            }
-            *position = '.';
-            field.grid[e.row][e.col] = 'E';
-            if (e.row == 19){
-                field.grid[e.row][e.col] = '.';
+
+        if (e.row < 19 && e.speed == 1){
+            if (field.isCellEmpty(e.row + 1, e.col)) {
+                e.moveDown();
+            } else if (e.col > 0 && field.isCellEmpty(e.row + 1, e.col - 1)) {
+                e.moveDiagonalLeft();
+            } else if (e.col < 19 && field.isCellEmpty(e.row + 1, e.col + 1)) {
+                e.moveDiagonalRight();
             }
         }
+        
+        if (e.row < 18 && e.speed == 2){
+            if ( field.isCellEmpty(e.row + 2, e.col) ) {
+                e.moveDown();
+            } else if ( e.col > 1 && field.isCellEmpty(e.row + 2, e.col - 2) ) {
+                e.moveDiagonalLeft();
+            } else if ( e.col < 18 && field.isCellEmpty(e.row + 2, e.col + 2) ) {
+                e.moveDiagonalRight();
+            }
+        }
+    
+        *position = '.';
+        field.grid[e.row][e.col] = 'E';
+        if (e.row == 19){
+            field.displayGrid();
+            e.health = 0;
+            field.grid[e.row][e.col] = '.';
+        }  
     }
 
 
+    void showResult(Castle castle){
+        cout << "-------------------" << endl;
+        cout << "GAME OVER" << endl;
+        cout << "Player Score: " << endl;
+        cout << "Enemies Destroyed: " << endl;
+        
+        if (castle.health > 0){
+            cout << "Castle Health: " << castle.health << endl;
+            cout << "Winner: Player" << endl;  
+        } else {
+            cout << "Castle Health: " << 0 << endl;
+            cout << "Winner: AI" << endl;
+        }   
+    }
 };
 
 #endif

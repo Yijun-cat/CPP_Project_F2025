@@ -5,14 +5,18 @@
 
 class Castle : public StaticObject
 {
-private:
-    int health;
 public:
+    int health;
+
     Castle (int r = 19, int c = 9) : StaticObject(r, c){
         this->health = 100;
     }
 
-    bool isDestoryed(){
+    int getHealth(){
+        return this->health;
+    }
+
+    bool isDestroyed(){
         if (this->health <= 0){
             return true;
         }

@@ -23,21 +23,57 @@ int main()
     myGame.place_tower(grid, towers);
 
     int wave = 0;
-    int spawned = 0;
+    
+    while ( wave < myGame.get_waveNumber() && !castle.isDestroyed() ){
+        bool stopWave = false;
+        int totalHealth = 0;
+        Enemy enemies[myGame.get_enemiesPerWave()];
 
-    while (wave < 5){
-        Enemy enemies[10] = {};
+        while (!stopWave){
+            for (int ei = 0; ei < myGame.get_enemiesPerWave(); ei++) {
+                if ( !enemies[ei].spawned ) {
+                    enemies[ei].row = 0;
+                    enemies[ei].col = myAI.spawnEnemy(grid, towers);
+                    enemies[ei].spawned = true;
+                    for ( int ti = 0; ti < 5; ti++ ) {
+                        towers[ti].attack(enemies[ei]);
+                    }
+                    if ( enemies[ei].health <= 0 ) {
+                        grid.grid[enemies[ei].row][enemies[ei].col] = '.';
+                    }
+                }
+                grid.displayGrid();
 
-        for (int i = 0; i < 10; i++){
-            if (enemies[i].is_spawned){
-                myGame.move_enemy(grid, enemies[i]);
+                for ( int ej = 0; ej < myGame.get_enemiesPerWave(); ej++ ) {
+                    if ( enemies[ej].spawned && enemies[ej].health > 0 ){
+                        myGame.moveEnemy(grid, enemies[ej]);
+                        if (enemies[ej].row == 19){
+                            castle.health -= 10;
+                        } else {
+                            for ( int tj = 0; tj < 5; tj++ ) {
+                                towers[tj].attack(enemies[ej]);
+                            }
+                            if ( enemies[ej].health <= 0 ) {
+                                grid.grid[enemies[ej].row][enemies[ej].col] = '.';
+                            }
+                        }
+                        grid.displayGrid();       
+                    }   
+                }
             }
-        }
-        grid.displayGrid();
 
-        if (spawned < 10){
-            enemies[spawned].row = 0;
-            enemies[spawned].col = myAI.spawnEnemy(grid, towers);
+            // Sum health of enemies in current wave
+            for ( int i = 0; i < myGame.get_enemiesPerWave(); i++ ){
+                totalHealth += enemies[i].health;
+            }
+
+            // Check alive enemies
+            if ( totalHealth <= 0 ){
+                stopWave = true;   
+            }
+
+        wave++;
+            //myGame.showResult(castle);
         }
     }
 

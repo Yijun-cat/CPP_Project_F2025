@@ -9,21 +9,31 @@ private:
     int enemiesPerWave = 10;
     int total_enemies = 50;
 public:
-
     int spawnEnemy(Grid &field, Tower* towers){
-        int search = 0;
-        while (search < 20){
+        bool findCol = false;
+        int col_chosen;
+        while (!findCol){
+            int search = 0;
+            srand(time(0));
             int col = rand() % 20;
-            if (field.isCellEmpty(0, col) && !field.isCellNearTower(towers, col)){
-                field.grid[0][col] = 'E';
-                return col;
+            while (search < 20){
+                if (field.isCellEmpty(0, col) && !field.isCellNearTower(towers, col)){
+                    col_chosen = col;
+                    findCol = true;
+                    break;
+                } else {
+                    search++;
+                }
             }
-            search++;
-            field.grid[0][col] = 'E';
-            if (search == 20){
-                return col;
+            
+            if ( field.isCellEmpty(0, col) ) {
+                col_chosen = col;
+                findCol = true;
             }
         }
+        field.grid[0][col_chosen] = 'E';
+        field.displayGrid();
+        return col_chosen;
     }
 
     void adjustDifficulty(int playerScore){
