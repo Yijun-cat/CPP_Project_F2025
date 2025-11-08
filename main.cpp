@@ -17,19 +17,19 @@ int main()
     // Initate game management objects
     Game myGame;
     AI myAI;
+    Enemy enemies[myGame.get_enemiesPerWave()];
 
     //Initiate the game, create the grid and place 5 towers
     myGame.init_game(grid, castle);
     myGame.place_tower(grid, towers);
 
     int wave = 0;
+    int score = 0;
+    int enemiesDestroyed = 0;
     
     while ( wave < myGame.get_waveNumber() && !castle.isDestroyed() ){
-        bool stopWave = false;
-        int totalHealth = 0;
-        Enemy enemies[myGame.get_enemiesPerWave()];
-
-        while (!stopWave){
+        bool play = true;
+        while ( play ){
             for (int ei = 0; ei < myGame.get_enemiesPerWave(); ei++) {
                 if ( !enemies[ei].spawned ) {
                     enemies[ei].row = 0;
@@ -62,20 +62,29 @@ int main()
                 }
             }
 
-            // Sum health of enemies in current wave
-            for ( int i = 0; i < myGame.get_enemiesPerWave(); i++ ){
-                totalHealth += enemies[i].health;
+            play = false;
+            for ( int i = 0; i < myGame.get_enemiesPerWave(); i++) {
+                if ( enemies[i].health > 0 ) {
+                    play = true;
+                    break;
+                }
             }
 
-            // Check alive enemies
-            if ( totalHealth <= 0 ){
-                stopWave = true;   
+            if ( !play ) {
+                for ( int i = 0; i < myGame.get_enemiesPerWave(); i++ ) {
+                    if ( enemies[i].row != 19 ) {
+                        score += 10;
+                        enemiesDestroyed ++;
+                    }
+                    enemies[i].spawned = false;
+                    enemies[i].health = 3;
+                }
+                wave += 1;
             }
-
-        wave++;
-            //myGame.showResult(castle);
         }
     }
+
+    myGame.showResult(castle, score, enemiesDestroyed);
 
     return 0;
 }

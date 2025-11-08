@@ -86,16 +86,17 @@ public:
         if (e.row == 19){
             field.displayGrid();
             e.health = 0;
+            e.spawned = false;
             field.grid[e.row][e.col] = '.';
         }  
     }
 
 
-    void showResult(Castle castle){
+    void showResult(Castle castle, int score, int enemiesDestroyed){
         cout << "-------------------" << endl;
         cout << "GAME OVER" << endl;
-        cout << "Player Score: " << endl;
-        cout << "Enemies Destroyed: " << endl;
+        cout << "Player Score: " << score << endl;
+        cout << "Enemies Destroyed: " << enemiesDestroyed << endl;
         
         if (castle.health > 0){
             cout << "Castle Health: " << castle.health << endl;
