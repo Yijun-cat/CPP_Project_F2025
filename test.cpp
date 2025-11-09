@@ -2,30 +2,18 @@
 #include "Enemy.h"
 using namespace std;
 
-void show_num(int* ptr){
-        for (int i = 0; i < sizeof(ptr)/sizeof(ptr[0]); i++){
-            cout << *(ptr+i) << endl;
+void show_health(Enemy* enemies){
+        for (int i = 0; i < 10; i++){
+           cout << (enemies+i)->health + 1 << endl;
         }
     }
 
 int main() 
 {
-    int arr[2] = {1, 2};
-    show_num(arr);
-
-    bool v = 1;
-
     Enemy enemies[10];
+    //Enemy* ptr = enemies;
 
-    /*
-    for ( int i = 0; i < 10; i++){
-        cout << enemies[i].health << endl;
-    }
-    */
-    if (v) {
-        cout << !v << endl;
-    }
-    
+    show_health( enemies );
 
     return 0;
 }

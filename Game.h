@@ -6,7 +6,7 @@ using namespace std;
 class Game 
 {
 private:
-    int waveNumber = 5;
+    int totalWave = 5;
     int enemiesPerWave = 10;
 public:
     void init_game(Grid &field, Castle &castle){
@@ -16,7 +16,7 @@ public:
     }  
 
     int get_waveNumber(){
-        return this->waveNumber;
+        return this->totalWave;
     }
 
     int get_enemiesPerWave(){
@@ -24,6 +24,7 @@ public:
     }
 
     void place_tower(Grid &field, Tower* towers){
+        cout << endl;
         cout << "Place 5 towers in the grid (not in the top 2 rows and the castle cell)" << endl;
         int towerNum = 0;
 
@@ -86,14 +87,14 @@ public:
         if (e.row == 19){
             field.displayGrid();
             e.health = 0;
-            e.spawned = false;
             field.grid[e.row][e.col] = '.';
         }  
     }
 
 
     void showResult(Castle castle, int score, int enemiesDestroyed){
-        cout << "-------------------" << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "----------------------------------------" << endl;
         cout << "GAME OVER" << endl;
         cout << "Player Score: " << score << endl;
         cout << "Enemies Destroyed: " << enemiesDestroyed << endl;

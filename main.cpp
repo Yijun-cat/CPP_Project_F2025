@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "Castle.h"
 #include "Enemy.h"
 #include "Tower.h"
@@ -29,6 +31,10 @@ int main()
     
     while ( wave < myGame.get_waveNumber() && !castle.isDestroyed() ){
         bool play = true;
+        cout << endl;
+        cout << "Wave " << wave+1 << " starts in 3 seconds" << endl;
+        this_thread::sleep_for(chrono::milliseconds(3000));
+
         while ( play ){
             for (int ei = 0; ei < myGame.get_enemiesPerWave(); ei++) {
                 if ( !enemies[ei].spawned ) {
@@ -74,10 +80,14 @@ int main()
                 for ( int i = 0; i < myGame.get_enemiesPerWave(); i++ ) {
                     if ( enemies[i].row != 19 ) {
                         score += 10;
-                        enemiesDestroyed ++;
+                        enemiesDestroyed++;
                     }
-                    enemies[i].spawned = false;
-                    enemies[i].health = 3;
+                    enemies[i].regenerate();
+                }
+
+                myAI.adjustDifficulty( score, wave, myGame.get_enemiesPerWave(), enemies );
+                for ( int i = 0; i < 10; i++) {
+                    cout << enemies[i].health << endl;
                 }
                 wave += 1;
             }

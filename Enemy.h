@@ -47,19 +47,17 @@ public:
         }
     }
 
-    bool isDead(){
-        if (this->health <= 0){
-            return true;
-        }
-        return false;
+    void regenerate() {
+        this->spawned = false;
+        this->health = 3;
     }
 
     void addSpeed(){
         this->speed++;
     }
 
-    void addHealth(){
-        this->health++;
+    void addHealth(int hp){
+        this->health += hp;
     }
 };
 

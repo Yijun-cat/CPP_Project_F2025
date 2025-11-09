@@ -36,9 +36,13 @@ public:
         return col_chosen;
     }
 
-    void adjustDifficulty(int playerScore){
-
-    }
+    void adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies ){
+        if ( score >= ((waveNum+1) * 10 * 0.8) ) {
+            for ( int i = 0; i < enemiesPerWave; i++ ) {
+                (enemies+i) -> addHealth( waveNum+1 );
+            }
+        }  
+    } 
 };
 
 #endif
