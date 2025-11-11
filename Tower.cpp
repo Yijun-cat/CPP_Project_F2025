@@ -1,25 +1,5 @@
-#ifndef TOWER_H_
-#define TOWER_H_
-#include <iostream>
-#include "StaticObject.h"
+#include "Tower.h"
 #include "Enemy.h"
-
-class Enemy;
-
-class Tower : public StaticObject
-{
-private:
-    int power = 1;
-    int range = 2;
-public:
-    Tower(int r, int c);
-    int getPower();
-    int getRange();
-    void attack(Enemy &e);
-    void increasePower();
-    void increaseRange();
-};
-
 
 Tower::Tower(int r = 2, int c = 0) : StaticObject(r, c){}
 
@@ -54,5 +34,3 @@ void Tower::increasePower() {
 void Tower::increaseRange() {
     this->range++;
 }
-
-#endif

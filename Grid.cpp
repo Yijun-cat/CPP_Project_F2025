@@ -1,28 +1,4 @@
-#ifndef GRID_H_
-#define GRID_H_
-#include <iostream>
-#include <cstdlib>
-#include <chrono>
-#include <thread>
-#include "Tower.h"
-using namespace std;
-
-class Tower;
-
-class Grid 
-{
-private:
-    static const int rows = 20;
-    static const int cols = 20;
-public:
-    char grid[rows][cols];
-    void initGrid();
-    void clearConsole();
-    void displayGrid();
-    bool isCellEmpty(int r, int c);
-    bool isCellNearTower(Tower* towers, int c);
-};
-
+#include "Grid.h"
 
 // Set up the battlefield
 void Grid::initGrid(){
@@ -69,5 +45,3 @@ bool Grid::isCellNearTower(Tower* towers, int c){
     }
     return false;
 }
-
-#endif

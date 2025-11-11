@@ -36,6 +36,8 @@ int main()
         this_thread::sleep_for(chrono::milliseconds(3000));
 
         while ( play ){
+            int waveScore = 0;
+
             for (int ei = 0; ei < myGame.get_enemiesPerWave(); ei++) {
                 if ( !enemies[ei].spawned ) {
                     enemies[ei].row = 0;
@@ -79,6 +81,7 @@ int main()
             if ( !play ) {
                 for ( int i = 0; i < myGame.get_enemiesPerWave(); i++ ) {
                     if ( enemies[i].row != 19 ) {
+                        waveScore += 10;
                         score += 10;
                         enemiesDestroyed++;
                     }
@@ -89,6 +92,12 @@ int main()
                 for ( int i = 0; i < 10; i++) {
                     cout << enemies[i].health << endl;
                 }
+
+                // tower upgrade should not be automatic; require player decision
+                if ( waveScore >= (myGame.get_enemiesPerWave() * 10 * 0.8) ) {
+                    myGame.upgradeTower(towers);
+                }
+
                 wave += 1;
             }
         }
