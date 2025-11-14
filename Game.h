@@ -44,14 +44,15 @@ void Game::place_tower(Grid &field, Tower* towers){
     int towerNum = 0;
     while ( towerNum < 5 ) {
         cout << "Enter row number of tower " << towerNum + 1 << endl;
-        int row;
-        cin >> row;
+        int rowChosen;
+        cin >> rowChosen;
+        int row = rowChosen-1;
         if (row >= 2 && row <= 19) {
-            bool legal_col = false;
-            while (!legal_col) {
+            while (true ) {
                 cout << "Enter column number of tower " << towerNum + 1 << endl;
-                int col;
-                cin >> col;
+                int colChosen;
+                cin >> colChosen;
+                int col = colChosen-1;
                 if (col >= 0 && col <= 19 && field.isCellEmpty(row, col)){
                     Tower tower(row, col);
                     *(towers + towerNum) = tower;
@@ -59,7 +60,7 @@ void Game::place_tower(Grid &field, Tower* towers){
                     field.clearConsole();
                     field.displayGrid();
                     towerNum ++;
-                    legal_col = true;
+                    break;
                 } else {
                     cout << "This column number is not allowed, try another one" << endl;
                     continue;
@@ -104,18 +105,28 @@ void Game::moveEnemy(Grid &field, Enemy &e){
     }  
 }
 
+// player chooses which tower to upgrade
 void Game::upgradeTower(Tower* towers) {
     int whichTower;
     
-    for ( int i = 0; i < 5; i++ ) {
-        cout << "Tower " << i 
-            << ", row: " << (towers+i)->getRow()
-            << ", column: " << (towers+i)->getCol() << endl;
-    }
-    cout << "Choose a tower to upgrade" << endl;
-    cin >> whichTower;
-    towers[whichTower].increasePower();
-    towers[whichTower].increaseRange();
+    while ( true ) {
+        for ( int i = 0; i < 5; i++ ) {
+        cout << "Tower " << i+1 
+            << ", row: " << (towers+i)->getRow()+1
+            << ", column: " << (towers+i)->getCol()+1 << endl;
+        }
+        cout << "Choose a tower number to upgrade, 1 to 5" << endl;
+        cin >> whichTower;
+        if ( whichTower >=1 && whichTower <= 5 ) {
+            int towerNum = whichTower-1;
+            (towers+towerNum)->increasePower();
+            (towers+towerNum)->increaseRange();
+            break;
+        } else {
+            cout << "This tower number is not in towers, choose another one" << endl;
+            continue;
+        }
+    } 
 }
 
 void Game::showResult(Castle castle, int score, int enemiesDestroyed){

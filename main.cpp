@@ -65,7 +65,10 @@ int main()
                                 grid.grid[enemies[ej].row][enemies[ej].col] = '.';
                             }
                         }
-                        grid.displayGrid();       
+                        grid.displayGrid();
+                        if ( castle.isDestroyed() ) {
+                            break;
+                        }       
                     }   
                 }
             }
@@ -80,7 +83,7 @@ int main()
 
             if ( !play ) {
                 for ( int i = 0; i < myGame.get_enemiesPerWave(); i++ ) {
-                    if ( enemies[i].row != 19 ) {
+                    if ( enemies[i].row != 19 && enemies[i].health <= 0 ) {
                         waveScore += 10;
                         score += 10;
                         enemiesDestroyed++;
@@ -93,8 +96,8 @@ int main()
                     cout << enemies[i].health << endl;
                 }
 
-                // tower upgrade should not be automatic; require player decision
-                if ( waveScore >= (myGame.get_enemiesPerWave() * 10 * 0.8) ) {
+                // tower upgrade
+                if ( waveScore >= (myGame.get_enemiesPerWave() * 10 * 0.8) && wave < myGame.get_waveNumber()-1 ) {
                     myGame.upgradeTower(towers);
                 }
 

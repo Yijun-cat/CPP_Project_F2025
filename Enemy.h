@@ -61,7 +61,7 @@ void Enemy::regenerate() {
 }
 
 void Enemy::addSpeed(){
-    this->speed++;
+    this->speed = 2;
 }
 
 void Enemy::addHealth(int hp){

@@ -49,14 +49,19 @@ int AI::spawnEnemy(Grid &field, Tower* towers){
 }
     
 void AI::adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies ){
-    if ( score >= ((waveNum+1) * 10 * 0.8) ) {
+    if ( score >= ((waveNum+1) * 10 * enemiesPerWave * 0.8) ) {
         for ( int i = 0; i < enemiesPerWave; i++ ) {
-            (enemies+i) -> addHealth( waveNum+1 );
+            (enemies+i)->regenerate();
+            (enemies+i)->addHealth( waveNum+1 );
         }
-    }  
+    }
+    if ( score = ((waveNum+1) * 10 * enemiesPerWave) ) {
+        for ( int i = 0; i < enemiesPerWave; i++ ) {
+            if ( i%2 == 0 ) {
+                (enemies+i)->addSpeed();
+            }
+        }
+    }
 }
-
-    
-//};
 
 #endif
