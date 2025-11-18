@@ -1,9 +1,10 @@
 #ifndef AI_H_
 #define AI_H_
 #include <iostream>
-#include "Grid.h"
+#include "StaticObject.h"
 #include "Tower.h"
 #include "Enemy.h"
+#include "Grid.h"
 using namespace std;
 
 class Grid;
@@ -20,7 +21,7 @@ public:
     void adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies );
 };
 
-
+/*
 int AI::spawnEnemy(Grid &field, Tower* towers){
     bool findCol = false;
     int col_chosen;
@@ -63,5 +64,6 @@ void AI::adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* ene
         }
     }
 }
+*/
 
 #endif

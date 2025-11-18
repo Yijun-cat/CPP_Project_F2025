@@ -7,8 +7,6 @@
 #include "Tower.h"
 using namespace std;
 
-class Tower;
-
 class Grid 
 {
 private:
@@ -23,7 +21,7 @@ public:
     bool isCellNearTower(Tower* towers, int c);
 };
 
-
+/*
 // Set up the battlefield
 void Grid::initGrid(){
     for (int r = 0; r < rows; r++){
@@ -69,5 +67,6 @@ bool Grid::isCellNearTower(Tower* towers, int c){
     }
     return false;
 }
+*/
 
 #endif

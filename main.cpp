@@ -1,9 +1,11 @@
 #include <iostream>
+#include <cstdlib>
 #include <chrono>
 #include <thread>
+#include "StaticObject.h"
 #include "Castle.h"
-#include "Enemy.h"
 #include "Tower.h"
+#include "Enemy.h"
 #include "Grid.h"
 #include "Game.h"
 #include "AI.h"

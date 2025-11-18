@@ -12,7 +12,7 @@ private:
     int power = 1;
     int range = 2;
 public:
-    Tower(int r, int c);
+    Tower(int r = 2, int c = 0);
     int getPower();
     int getRange();
     void attack(Enemy &e);
@@ -20,7 +20,7 @@ public:
     void increaseRange();
 };
 
-
+/*
 Tower::Tower(int r = 2, int c = 0) : StaticObject(r, c){}
 
 int Tower::getPower(){
@@ -54,5 +54,6 @@ void Tower::increasePower() {
 void Tower::increaseRange() {
     this->range++;
 }
+*/
 
 #endif

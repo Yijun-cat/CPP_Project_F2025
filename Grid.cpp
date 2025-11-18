@@ -1,4 +1,11 @@
+#include <iostream>
+#include <cstdlib>
+#include <chrono>
+#include <thread>
+#include "StaticObject.h"
+#include "Tower.h"
 #include "Grid.h"
+using namespace std;
 
 // Set up the battlefield
 void Grid::initGrid(){

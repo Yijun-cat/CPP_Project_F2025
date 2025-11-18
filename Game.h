@@ -3,11 +3,6 @@
 #include <iostream>
 using namespace std;
 
-class Grid;
-class Castle;
-class Tower;
-class Enemy;
-
 class Game 
 {
 private:
@@ -23,7 +18,7 @@ public:
     void showResult(Castle castle, int score, int enemiesDestroyed);
 };
 
-
+/*
 void Game::init_game(Grid &field, Castle &castle){
     field.initGrid();
     field.grid[castle.getRow()][castle.getCol()] = 'C';
@@ -144,6 +139,6 @@ void Game::showResult(Castle castle, int score, int enemiesDestroyed){
         cout << "Winner: AI" << endl;
     }   
 }
-
+*/
 
 #endif

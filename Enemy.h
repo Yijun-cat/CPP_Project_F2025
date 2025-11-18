@@ -9,7 +9,7 @@ public:
     int row, col;
     int health, speed;
     bool spawned;
-    Enemy (int row, int col);
+    Enemy (int row = 0, int col = 0);
     void moveDown();
     void moveDiagonalLeft();
     void moveDiagonalRight();
@@ -18,7 +18,7 @@ public:
     void addHealth(int hp);
 };
 
-
+/*
 Enemy::Enemy (int row = 0, int col = 0){
     this->row = row;
     this->col = col;
@@ -67,5 +67,6 @@ void Enemy::addSpeed(){
 void Enemy::addHealth(int hp){
     this->health += hp;
 }
+*/
 
 #endif

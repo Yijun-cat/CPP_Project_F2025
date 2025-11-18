@@ -1,19 +1,6 @@
-#ifndef STATICOBJECT_H_
-#define STATICOBJECT_H_
 #include <iostream>
+#include "StaticObject.h"
 
-class StaticObject
-{
-private:
-    int row;
-    int col;
-public:
-    StaticObject(int r, int c);
-    int getRow();
-    int getCol();
-};
-
-/*
 StaticObject::StaticObject(int r, int c){
     this->row = r;
     this->col = c;
@@ -26,6 +13,3 @@ int StaticObject::getRow(){
 int StaticObject::getCol(){
     return this->col;
 }
-*/
-
-#endif

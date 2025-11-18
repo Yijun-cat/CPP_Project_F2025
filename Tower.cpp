@@ -1,7 +1,9 @@
-#include "Tower.h"
+#include <iostream>
+#include "StaticObject.h"
 #include "Enemy.h"
+#include "Tower.h"
 
-Tower::Tower(int r = 2, int c = 0) : StaticObject(r, c){}
+Tower::Tower(int r , int c) : StaticObject(r, c){}
 
 int Tower::getPower(){
     return this->power;

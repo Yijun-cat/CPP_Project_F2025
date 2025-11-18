@@ -1,6 +1,8 @@
+#include <iostream>
 #include "Enemy.h"
+using namespace std;
 
-Enemy::Enemy (int row = 0, int col = 0){
+Enemy::Enemy (int row, int col){
     this->row = row;
     this->col = col;
     this->health = 3;
@@ -42,7 +44,7 @@ void Enemy::regenerate() {
 }
 
 void Enemy::addSpeed(){
-    this->speed++;
+    this->speed = 2;
 }
 
 void Enemy::addHealth(int hp){

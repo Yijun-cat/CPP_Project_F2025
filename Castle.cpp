@@ -1,6 +1,8 @@
+#include <iostream>
+#include "StaticObject.h"
 #include "Castle.h"
 
-Castle::Castle (int r = 19, int c = 9) : StaticObject(r, c){
+Castle::Castle (int r, int c) : StaticObject(r, c){
     this->health = 100;
 }
 
