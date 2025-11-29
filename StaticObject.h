@@ -2,30 +2,16 @@
 #define STATICOBJECT_H_
 #include <iostream>
 
-class StaticObject
+class StaticObject // Object once placed cannot move 
 {
 private:
+    // Properties of static object
     int row;
     int col;
 public:
-    StaticObject(int r, int c);
-    int getRow();
-    int getCol();
+    StaticObject(int r, int c); // Initialize row and column
+    int getRow(); // Retrieve row number of the object
+    int getCol(); // Retrieve column number of the object
 };
-
-/*
-StaticObject::StaticObject(int r, int c){
-    this->row = r;
-    this->col = c;
-}
-
-int StaticObject::getRow(){
-    return this->row;
-}
-
-int StaticObject::getCol(){
-    return this->col;
-}
-*/
 
 #endif

@@ -14,56 +14,17 @@ class Enemy;
 class AI
 {
 private:
+    // Properties of class AI
     int enemiesPerWave = 10;
-    int total_enemies = 50;
+    int colSpawned[20] = {0}; // stats of column where enemy is spwaned
+    int colCastleReached[20] = {0}; // stats of column where enemy reach castle row
+    int colTotalDepth[20] = {0}; // max row reached in each column
 public:
-    int spawnEnemy(Grid &field, Tower* towers);
-    void adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies );
-};
+    void enemyPerformance( int colEnemySpawned, int rowReached, bool isCastleReached );
+    int spawnEnemy(Grid &field, int waveNum); // Return column number of a spwaned enemy
+    int strategicColumn( Grid &field);
 
-/*
-int AI::spawnEnemy(Grid &field, Tower* towers){
-    bool findCol = false;
-    int col_chosen;
-    while (!findCol){
-        int search = 0;
-        srand(time(0));
-        int col = rand() % 20;
-        while (search < 20){
-            if (field.isCellEmpty(0, col) && !field.isCellNearTower(towers, col)){
-                col_chosen = col;
-                findCol = true;
-                break;
-            } else {
-                search++;
-            }
-        }
-        
-        if ( field.isCellEmpty(0, col) ) {
-            col_chosen = col;
-            findCol = true;
-        }
-    }
-    field.grid[0][col_chosen] = 'E';
-    field.displayGrid();
-    return col_chosen;
-}
-    
-void AI::adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies ){
-    if ( score >= ((waveNum+1) * 10 * enemiesPerWave * 0.8) ) {
-        for ( int i = 0; i < enemiesPerWave; i++ ) {
-            (enemies+i)->regenerate();
-            (enemies+i)->addHealth( waveNum+1 );
-        }
-    }
-    if ( score = ((waveNum+1) * 10 * enemiesPerWave) ) {
-        for ( int i = 0; i < enemiesPerWave; i++ ) {
-            if ( i%2 == 0 ) {
-                (enemies+i)->addSpeed();
-            }
-        }
-    }
-}
-*/
+    void adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies ); // Change enemy health and speed to increase difficulty
+};
 
 #endif

@@ -14,15 +14,15 @@ void Game::init_game(Grid &field, Castle &castle){
     field.displayGrid();
 } 
 
-int Game::get_waveNumber(){
+int Game::getWaveNumber(){
     return this->totalWave;
 }
 
-int Game::get_enemiesPerWave(){
+int Game::getEnemiesPerWave(){
     return this->enemiesPerWave;
 }
 
-void Game::place_tower(Grid &field, Tower* towers){
+void Game::placeTower(Grid &field, Tower* towers){
     cout << endl;
     cout << "Place 5 towers in the grid (not in the top 2 rows and the castle cell)" << endl;
     int towerNum = 0;
@@ -59,33 +59,33 @@ void Game::place_tower(Grid &field, Tower* towers){
 }
 
 void Game::moveEnemy(Grid &field, Enemy &e){
-    char* position = &field.grid[e.row][e.col];
-    if (e.row < 19 && e.speed == 1){
-        if (field.isCellEmpty(e.row + 1, e.col)) {
+    char* position = &field.grid[e.getRow()][e.getCol()];
+    if (e.getRow() < 19 && e.getSpeed()== 1){
+        if (field.isCellEmpty(e.getRow() + 1, e.getCol())) {
             e.moveDown();
-        } else if (e.col > 0 && field.isCellEmpty(e.row + 1, e.col - 1)) {
+        } else if (e.getCol() > 0 && field.isCellEmpty(e.getRow() + 1, e.getCol() - 1)) {
             e.moveDiagonalLeft();
-        } else if (e.col < 19 && field.isCellEmpty(e.row + 1, e.col + 1)) {
+        } else if (e.getCol() < 19 && field.isCellEmpty(e.getRow() + 1, e.getCol() + 1)) {
             e.moveDiagonalRight();
         }
     }
     
-    if (e.row < 18 && e.speed == 2){
-        if ( field.isCellEmpty(e.row + 2, e.col) ) {
+    if (e.getRow() < 18 && e.getSpeed() == 2){
+        if ( field.isCellEmpty(e.getRow() + 2, e.getCol()) ) {
             e.moveDown();
-        } else if ( e.col > 1 && field.isCellEmpty(e.row + 2, e.col - 2) ) {
+        } else if ( e.getCol() > 1 && field.isCellEmpty(e.getRow() + 2, e.getCol() - 2) ) {
             e.moveDiagonalLeft();
-        } else if ( e.col < 18 && field.isCellEmpty(e.row + 2, e.col + 2) ) {
+        } else if ( e.getCol() < 18 && field.isCellEmpty(e.getRow() + 2, e.getCol() + 2) ) {
             e.moveDiagonalRight();
         }
     }
 
     *position = '.';
-    field.grid[e.row][e.col] = 'E';
-    if (e.row == 19){
+    field.grid[e.getRow()][e.getCol()] = 'E';
+    if (e.getRow() == 19){
         field.displayGrid();
-        e.health = 0;
-        field.grid[e.row][e.col] = '.';
+        e.setHealth(0);
+        field.grid[e.getRow()][e.getCol()] = '.';
     }  
 }
 
@@ -120,8 +120,8 @@ void Game::showResult(Castle castle, int score, int enemiesDestroyed){
     cout << "Player Score: " << score << endl;
     cout << "Enemies Destroyed: " << enemiesDestroyed << endl;
     
-    if (castle.health > 0){
-        cout << "Castle Health: " << castle.health << endl;
+    if (castle.getHealth()> 0){
+        cout << "Castle Health: " << castle.getHealth() << endl;
         cout << "Winner: Player" << endl;  
     } else {
         cout << "Castle Health: " << 0 << endl;

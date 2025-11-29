@@ -5,68 +5,28 @@ using namespace std;
 
 class Enemy
 {
-public:
-    int row, col;
+private:
+    // Properties of enemy
+    int row, col; 
     int health, speed;
     bool spawned;
-    Enemy (int row = 0, int col = 0);
-    void moveDown();
-    void moveDiagonalLeft();
-    void moveDiagonalRight();
-    void regenerate();
-    void addSpeed();
-    void addHealth(int hp);
+public:
+    Enemy (int row = 0, int col = 0); // Constructor initialize class
+    int getRow(); // Retrieve row number 
+    void setRow( int row ); // Define row number 
+    int getCol(); // Retrieve column number 
+    void setCol( int col ); // Define column number
+    int getSpeed(); // Retrieve speed value
+    int getHealth(); // Retrieve enemy health
+    void setHealth( int health ); // Define enemy health
+    bool isSpawned(); // Check if an enemy is spawned
+    void enemySpawned(); // Set spawned to true
+    void moveDown(); // Move enemy down the grid
+    void moveDiagonalLeft(); // Move diagnoally down left 
+    void moveDiagonalRight(); // Move diagnoally down right
+    void regenerate(); // reset enemy properties
+    void addSpeed(); // increase enemy speed
+    void addHealth(int hp); // increase enemy health
 };
-
-/*
-Enemy::Enemy (int row = 0, int col = 0){
-    this->row = row;
-    this->col = col;
-    this->health = 3;
-    this->speed = 1;
-    this->spawned = false;
-}
-
-void Enemy::moveDown(){
-    if (this->speed = 1){
-        this->row ++;
-    } else {
-        this->row += 2;
-    }
-}
-
-void Enemy::moveDiagonalLeft(){
-    if (this->speed = 1){
-        this->row ++;
-        this->col --;
-    } else {
-        this->row += 2;
-        this->col -= 2;
-    }
-}
-
-void Enemy::moveDiagonalRight(){
-    if (this->speed = 1){
-        this->row ++;
-        this->col ++;
-    } else {
-        this->row += 2;
-        this->col += 2;
-    }
-}
-
-void Enemy::regenerate() {
-    this->spawned = false;
-    this->health = 3;
-}
-
-void Enemy::addSpeed(){
-    this->speed = 2;
-}
-
-void Enemy::addHealth(int hp){
-    this->health += hp;
-}
-*/
 
 #endif

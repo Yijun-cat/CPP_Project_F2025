@@ -2,6 +2,7 @@
 #include "Enemy.h"
 using namespace std;
 
+// Constructor initalizes class with some default values
 Enemy::Enemy (int row, int col){
     this->row = row;
     this->col = col;
@@ -10,7 +11,47 @@ Enemy::Enemy (int row, int col){
     this->spawned = false;
 }
 
+int Enemy::getRow() {
+    return this->row;
+}
+
+void Enemy::setRow( int row ) {
+    this->row = row;
+}
+
+int Enemy::getCol() {
+    return this->col;
+}
+
+void Enemy::setCol( int col ) {
+    this->col = col;
+}
+
+int Enemy::getSpeed(){
+    return this->speed;
+}
+
+int Enemy::getHealth(){
+    return this->health;
+}
+
+void Enemy::setHealth(int health){
+    this->health = health;
+}
+
+// Check if an enemy is spawned
+bool Enemy::isSpawned() {
+    return this->spawned;
+}
+
+// Set spawned to true
+void Enemy::enemySpawned() {
+    this->spawned = true;
+}
+
+// Move enemy downward
 void Enemy::moveDown(){
+    // Check enemy speed to set steps
     if (this->speed = 1){
         this->row ++;
     } else {
@@ -18,7 +59,9 @@ void Enemy::moveDown(){
     }
 }
 
+// Move enemy diagonally down left
 void Enemy::moveDiagonalLeft(){
+    // Check enemy speed to determine steps
     if (this->speed = 1){
         this->row ++;
         this->col --;
@@ -28,6 +71,7 @@ void Enemy::moveDiagonalLeft(){
     }
 }
 
+// Move enemy diagonally down right
 void Enemy::moveDiagonalRight(){
     if (this->speed = 1){
         this->row ++;
@@ -38,15 +82,18 @@ void Enemy::moveDiagonalRight(){
     }
 }
 
+// Reset enemy to spawn in next wave
 void Enemy::regenerate() {
     this->spawned = false;
     this->health = 3;
 }
 
+// Increas enemy speed to 2
 void Enemy::addSpeed(){
     this->speed = 2;
 }
 
+// Define enemy health
 void Enemy::addHealth(int hp){
     this->health += hp;
 }
