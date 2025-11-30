@@ -24,9 +24,11 @@ public:
     void moveDown(); // Move enemy down the grid
     void moveDiagonalLeft(); // Move diagnoally down left 
     void moveDiagonalRight(); // Move diagnoally down right
-    void regenerate(); // reset enemy properties
+    bool isCastleReached(); // Check if an enemy reached castle row
+    void regenerate(int hp); // reset enemy properties
     void addSpeed(); // increase enemy speed
-    void addHealth(int hp); // increase enemy health
+    void addHealth(); // increase enemy health
+
 };
 
 #endif

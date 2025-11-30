@@ -22,28 +22,33 @@ int main()
     Game myGame;
     AI myAI;
     Enemy enemies[myGame.getEnemiesPerWave()];
+   
 
     //Initiate the game, create the grid and place 5 towers
     myGame.init_game(grid, castle);
     myGame.placeTower(grid, towers);
 
+    // Variables for the game process
     int wave = 1;
     int score = 0;
     int enemiesDestroyed = 0;
+    int enemyHealth = enemies[0].getHealth();
     int castleHealth = castle.getHealth();
     srand(time(0));
     
-    // Run the game while castle health is > 0 and 
+    // Run the game while castle health is > 0 and total wave <= 5
     while ( wave <= myGame.getWaveNumber() && !castle.isDestroyed() ){
         bool play = true;
         cout << endl;
         cout << "Wave " << wave << " starts in 3 seconds" << endl;
         this_thread::sleep_for(chrono::milliseconds(3000));
 
+        // Game behavior in one wave
         while ( play ){
             int waveScore = 0;
-
+            // Decide each enemy movement
             for (int ei = 0; ei < myGame.getEnemiesPerWave(); ei++) {
+                // Spawn enemies
                 if ( !enemies[ei].isSpawned() ) {
                     enemies[ei].setRow( 0 );
                     enemies[ei].setCol( myAI.spawnEnemy(grid, wave) );
@@ -55,12 +60,13 @@ int main()
                         grid.grid[enemies[ei].getRow()][enemies[ei].getCol()] = '.';
                     }
                 }
-                grid.displayGrid();
+                grid.displayGrid(); // Update grid
 
+                // Spawned enemies move
                 for ( int ej = 0; ej < myGame.getEnemiesPerWave(); ej++ ) {
                     if ( enemies[ej].isSpawned() && enemies[ej].getHealth() > 0 ){
                         myGame.moveEnemy(grid, enemies[ej]);
-                        if (enemies[ej].getRow() == 19){
+                        if (enemies[ej].getRow() == 19){ // Deal damage to castle when reach castle row
                             castleHealth -= 10;
                             castle.setHealth ( castleHealth);
                         } else {
@@ -71,22 +77,27 @@ int main()
                                 grid.grid[enemies[ej].getRow()][enemies[ej].getCol()] = '.';
                             }
                         }
-                        grid.displayGrid();
-                        if ( castle.isDestroyed() ) {
-                            break;
-                        }       
-                    }   
+                    
+                        grid.displayGrid(); // Update the grid after enemy move
+                    }
+                    if ( castle.isDestroyed() ){ // Stop enemies move if castle is destroyed
+                        break;
+                    }    
                 }
-            }
-
+            }  
+           
             play = false;
-            for ( int i = 0; i < myGame.getEnemiesPerWave(); i++) {
-                if ( enemies[i].getHealth() > 0 ) {
-                    play = true;
-                    break;
+            // Check wave ends condition
+            if ( !castle.isDestroyed() ) {
+                for ( int i = 0; i < myGame.getEnemiesPerWave(); i++) {
+                    if ( enemies[i].getHealth() > 0 ) { // Wave continues if there are enemies alive
+                        play = true;
+                        break;
+                    }
                 }
-            }
-
+            }   
+              
+            // Update game results and change game difficulty if current wave ends
             if ( !play ) {
                 for ( int i = 0; i < myGame.getEnemiesPerWave(); i++ ) {
                     if ( enemies[i].getRow() != 19 && enemies[i].getHealth() <= 0 ) {
@@ -94,25 +105,27 @@ int main()
                         score += 10;
                         enemiesDestroyed++;
                     }
-                    enemies[i].regenerate();
-                }
-
-                myAI.adjustDifficulty( score, wave, myGame.getEnemiesPerWave(), enemies );
-                if ( wave < 5 ) {
-                    cout << endl;
-                    cout << "Enemy health in next wave: " << enemies[0].getHealth() << endl;
+                    myAI.enemyPerformance( enemies[i].getCol(), enemies[i].getRow(), enemies[i].isCastleReached() );
+                    enemies[i].regenerate(enemyHealth); // reset enemy parameters to spawn in next wave
                 }
                 
-                // tower upgrade
-                if ( waveScore >= (myGame.getEnemiesPerWave() * 10 * 0.8) && wave < myGame.getWaveNumber() ) {
-                    myGame.upgradeTower(towers);
-                }
-
-                wave += 1;
+                if ( wave < 5 ) {
+                    myAI.adjustDifficulty( waveScore, myGame.getEnemiesPerWave(), enemies ); // Change enemy properies to increase difficulty
+                    enemyHealth = enemies[0].getHealth();
+                    cout << endl;
+                    cout << "Enemy health in next wave: " << enemies[0].getHealth() << endl; // Notify player difficulty in next wave
+                    // tower upgrade
+                    if ( waveScore >= (myGame.getEnemiesPerWave() * 10 * 0.8) && wave < myGame.getWaveNumber() ) {
+                        cout << endl;
+                        myGame.upgradeTower(towers);
+                    }
+                    wave += 1; // increment wave number when current wave ends
+                }     
             }
         }
     }
 
+    // Display game result when game ends
     myGame.showResult(castle, score, enemiesDestroyed);
 
     return 0;

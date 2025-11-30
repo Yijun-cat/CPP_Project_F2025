@@ -6,17 +6,20 @@
 #include "AI.h"
 using namespace std;
 
-void AI::enemyPerformance( int colEnemySpawned, int rowReached, bool isCastleReached ) {
-    colSpawned[colEnemySpawned]++;
-    colTotalDepth[colEnemySpawned] += rowReached;
+// Collect stats of enemy performance in each run
+void AI::enemyPerformance( int colEnemySpawned, int rowReached, bool isCastleReached ) 
+{
+    colSpawned[colEnemySpawned]++; // record number of times a column where enemy is spawned
+    colTotalDepth[colEnemySpawned] += rowReached; // record total depth an enemy reached in that column
     if ( isCastleReached ) 
     {
-        colCastleReached[colEnemySpawned]++;
+        colCastleReached[colEnemySpawned]++; // record number of times an enemy reached castle in column
     }
 }
 
 // Find a optimal column where an enemy can be spawned
-int AI::spawnEnemy(Grid &field, int waveNum){
+int AI::spawnEnemy(Grid &field, int waveNum)
+{
     bool findCol = false;
     int colChosen;
     while (!findCol)
@@ -25,7 +28,7 @@ int AI::spawnEnemy(Grid &field, int waveNum){
         
         int col = rand() % 20;
         
-        if ( waveNum == 1 )
+        if ( waveNum == 1 ) // Randomly spawn enemy in empty cell in the first run
         {
             if ( field.isCellEmpty(0, col) ) 
             {
@@ -33,18 +36,19 @@ int AI::spawnEnemy(Grid &field, int waveNum){
                 findCol = true;
             }
         }
-        else
+        else // after first run start using adaptive spawning 
         {
             colChosen = strategicColumn(field);
             findCol = true;
         }
     }
-
+    // Show enemy symbol in a cell
     field.grid[0][colChosen] = 'E';
     field.displayGrid();
     return colChosen;
 }
 
+// Strategic spawning in column where enemies have better performance
 int AI::strategicColumn(Grid &field)
 {
     double colScore[20];
@@ -69,49 +73,57 @@ int AI::strategicColumn(Grid &field)
     }
 
     // Find max score among valid columns
-    double maxColScore = -1.0;
+    double maxScore = -1.0;
     for ( int c = 0; c < 20; c++ ) 
     {
-        if ( colScore[c] > maxColScore )
+        if ( colScore[c] > maxScore )
         {
-            maxColScore = colScore[c];
+            maxScore = colScore[c];
         }
     }
 
-    /*
-    // Collect all “good enough” columns (within 80% of max score)
-    int candidates[20];
+    // Select column score >= 60% of max score
+    int selectedCol[20];
     int count = 0;
-    for (int c = 0; c < 20; ++c) {
-        if (scores[c] >= 0 && scores[c] >= 0.8 * maxScore) {
-            candidates[count++] = c;
+    for ( int c = 0; c < 20; c++ )
+    {
+        if ( colScore[c] >= 0 && colScore[c] >= 0.6 * maxScore )
+        {
+            selectedCol[count++] = c;
         }
     }
 
-    // Fallback: if something went wrong, pick any empty column
-    if (count == 0) {
-        while (true) {
+    //If no column score >= 0.6 * max score
+    if ( count == 0) 
+    {
+        while( true )
+        {
             int col = rand() % 20;
-            if (field.isCellEmpty(0, col)) return col;
+            if ( field.isCellEmpty(0, col) )
+            {
+                return col;
+            } 
         }
     }
 
-    // Randomly choose one of the best candidates
+    // Randomly choose one of selected columns
     int idx = rand() % count;
-    return candidates[idx];
-    */
+    return selectedCol[idx]; 
 }
     
-void AI::adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies ){
-    // increase enemy health if over 80% enemies do not survive in each wave
-    if ( score >= ( waveNum * 10 * enemiesPerWave * 0.8 ) ) {
-        for ( int i = 0; i < enemiesPerWave; i++ ) {
-            (enemies+i)->regenerate();
-            (enemies+i)->addHealth( waveNum );
+// Change enemy health and speed to increase difficulty
+void AI::adjustDifficulty(int waveScore, int enemiesPerWave, Enemy* enemies )
+{
+    // Increase enemy health if over 80% enemies do not survive in each wave
+    if ( waveScore >= ( enemiesPerWave * 10 * 0.8) ) 
+    {
+        for ( int i = 0; i < enemiesPerWave; i++ )
+        {
+            (enemies+i)->addHealth();
         }
     }
-    // Increase enemy speed if no enemy survive in continuous wave
-    if ( score = ( waveNum * 10 * enemiesPerWave) ) {
+    // Increase enemy speed if no enemy survive in one wave
+    if ( waveScore =   10 * enemiesPerWave ) {
         for ( int i = 0; i < enemiesPerWave; i++ ) {
             if ( i%2 == 0 ) {
                 (enemies+i)->addSpeed();

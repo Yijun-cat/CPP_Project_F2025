@@ -20,11 +20,10 @@ private:
     int colCastleReached[20] = {0}; // stats of column where enemy reach castle row
     int colTotalDepth[20] = {0}; // max row reached in each column
 public:
-    void enemyPerformance( int colEnemySpawned, int rowReached, bool isCastleReached );
+    void enemyPerformance( int colEnemySpawned, int rowReached, bool isCastleReached ); // Collect stats of enemy performance in each run
     int spawnEnemy(Grid &field, int waveNum); // Return column number of a spwaned enemy
-    int strategicColumn( Grid &field);
-
-    void adjustDifficulty(int score, int waveNum, int enemiesPerWave, Enemy* enemies ); // Change enemy health and speed to increase difficulty
+    int strategicColumn( Grid &field); // adaptive spawning using collected stats
+    void adjustDifficulty(int score, int enemiesPerWave, Enemy* enemies ); // Change enemy health and speed to increase difficulty
 };
 
 #endif

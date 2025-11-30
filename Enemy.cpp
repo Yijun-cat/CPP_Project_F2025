@@ -82,18 +82,28 @@ void Enemy::moveDiagonalRight(){
     }
 }
 
-// Reset enemy to spawn in next wave
-void Enemy::regenerate() {
-    this->spawned = false;
-    this->health = 3;
+// Check whether an enmey reached castle row
+bool Enemy::isCastleReached() 
+{
+    if ( this->row == 19 )
+    {
+        return true;
+    }
+    return false;
 }
 
-// Increas enemy speed to 2
+// Reset enemy to spawn in next wave
+void Enemy::regenerate(int hp) {
+    this->spawned = false;
+    this->health = hp;
+}
+
+// Increas enemy speed to 2 as maximum speed
 void Enemy::addSpeed(){
     this->speed = 2;
 }
 
-// Define enemy health
-void Enemy::addHealth(int hp){
-    this->health += hp;
+// Increment enemy health
+void Enemy::addHealth(){
+    this->health++;
 }
