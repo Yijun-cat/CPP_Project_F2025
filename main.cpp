@@ -37,7 +37,7 @@ int main()
     srand(time(0));
     
     // Run the game while castle health is > 0 and total wave <= 5
-    while ( wave <= myGame.getWaveNumber() && !castle.isDestroyed() ){
+    while ( wave < myGame.getWaveNumber()+1 && !castle.isDestroyed() ){
         bool play = true;
         cout << endl;
         cout << "Wave " << wave << " starts in 3 seconds" << endl;
@@ -90,7 +90,7 @@ int main()
             // Check wave ends condition
             if ( !castle.isDestroyed() ) {
                 for ( int i = 0; i < myGame.getEnemiesPerWave(); i++) {
-                    if ( enemies[i].getHealth() > 0 ) { // Wave continues if there are enemies alive
+                    if ( enemies[i].getHealth() > 0 ) { // Wave continues if there is an enemy alive
                         play = true;
                         break;
                     }
@@ -113,14 +113,14 @@ int main()
                     myAI.adjustDifficulty( waveScore, myGame.getEnemiesPerWave(), enemies ); // Change enemy properies to increase difficulty
                     enemyHealth = enemies[0].getHealth();
                     cout << endl;
-                    cout << "Enemy health in next wave: " << enemies[0].getHealth() << endl; // Notify player difficulty in next wave
+                    cout << "Enemy health in next wave: " << enemies[0].getHealth() << endl; // show difficulty in next wave
                     // tower upgrade
                     if ( waveScore >= (myGame.getEnemiesPerWave() * 10 * 0.8) && wave < myGame.getWaveNumber() ) {
                         cout << endl;
                         myGame.upgradeTower(towers);
-                    }
-                    wave += 1; // increment wave number when current wave ends
-                }     
+                    }    
+                } 
+                wave += 1; // increment wave number when current wave ends       
             }
         }
     }

@@ -82,18 +82,18 @@ int AI::strategicColumn(Grid &field)
         }
     }
 
-    // Select column score >= 60% of max score
+    // Select column score >= 50% of max score
     int selectedCol[20];
     int count = 0;
     for ( int c = 0; c < 20; c++ )
     {
-        if ( colScore[c] >= 0 && colScore[c] >= 0.6 * maxScore )
+        if ( colScore[c] >= 0 && colScore[c] >= 0.5 * maxScore )
         {
             selectedCol[count++] = c;
         }
     }
 
-    //If no column score >= 0.6 * max score
+    //If no column score >= 0.5 * max score
     if ( count == 0) 
     {
         while( true )
