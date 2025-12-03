@@ -9,7 +9,7 @@
 using namespace std;
 
 // Generate a grid and place the castle
-void Game::init_game(Grid &field, Castle &castle){
+void Game::initiateGame(Grid &field, Castle &castle){
     field.initGrid();
     field.grid[castle.getRow()][castle.getCol()] = 'C';
     field.displayGrid();
@@ -51,6 +51,7 @@ void Game::placeTower(Grid &field, Tower* towers){
     cout << "Place 5 towers in the grid (not in the top 2 rows and the castle cell)" << endl;
     int towerNum = 0;
     while ( towerNum < 5 ) {
+        cout << endl;
         int rowChosen = readInt( "Enter row number of tower " + to_string(towerNum + 1) + " (3-20): ");
         int row = rowChosen-1;
         if (row >= 2 && row <= 19) { // First check if row number is valid
@@ -81,28 +82,41 @@ void Game::placeTower(Grid &field, Tower* towers){
 // Enemy movement 
 void Game::moveEnemy(Grid &field, Enemy &e){
     char* position = &field.grid[e.getRow()][e.getCol()];
-    // Move 1 cell each turn when speed is 1
-    if (e.getRow() < 19 && e.getSpeed()== 1){
-        if (field.isCellEmpty(e.getRow() + 1, e.getCol())) {
+
+    // Enemy behavior when speed == 1
+    if ( e.getSpeed() == 1 ) {
+        if ( field.isCellEmpty(e.getRow() + 1, e.getCol() ) ) {
             e.moveDown();
-        } else if (e.getCol() > 0 && field.isCellEmpty(e.getRow() + 1, e.getCol() - 1)) {
+        }
+        else if ( field.isCellEmpty(e.getRow() + 1, e.getCol() - 1) ) {
             e.moveDiagonalLeft();
-        } else if (e.getCol() < 19 && field.isCellEmpty(e.getRow() + 1, e.getCol() + 1)) {
+        }
+        else if ( field.isCellEmpty(e.getRow() + 1, e.getCol() + 1) ) {
             e.moveDiagonalRight();
         }
+    }
+    // Enemy behavior when speed == 2
+    if ( e.getSpeed() == 2 ){
+        if ( e.getRow() < 18 ) {
+            if ( field.isCellEmpty(e.getRow() + 1, e.getCol() ) && field.isCellEmpty(e.getRow() + 2, e.getCol()) ) {
+                e.moveDown();
+            } else if ( field.isCellEmpty(e.getRow() + 1, e.getCol() - 1) && field.isCellEmpty(e.getRow() + 2, e.getCol() - 2) ) {
+                e.moveDiagonalLeft();
+            } else if ( field.isCellEmpty(e.getRow() + 1, e.getCol() + 1) && field.isCellEmpty(e.getRow() + 2, e.getCol() + 2) ) {
+                e.moveDiagonalRight();
+            }
+        } else {
+            if ( field.isCellEmpty(e.getRow() + 1, e.getCol() ) ) {
+                e.moveDown();
+            } else if ( field.isCellEmpty(e.getRow() + 1, e.getCol() - 1) ) {
+                e.moveDiagonalLeft();
+            } else if ( field.isCellEmpty(e.getRow() + 1, e.getCol() + 1) ) {
+                e.moveDiagonalRight();
+            }
+        }
+        
     }
     
-    // Move two cells each turn when enemy speed is increased to 2
-    if (e.getRow() < 18 && e.getSpeed() == 2){
-        if ( field.isCellEmpty(e.getRow() + 2, e.getCol()) ) {
-            e.moveDown();
-        } else if ( e.getCol() > 1 && field.isCellEmpty(e.getRow() + 2, e.getCol() - 2) ) {
-            e.moveDiagonalLeft();
-        } else if ( e.getCol() < 18 && field.isCellEmpty(e.getRow() + 2, e.getCol() + 2) ) {
-            e.moveDiagonalRight();
-        }
-    }
-
     // Update the grid after enemies move
     *position = '.';
     field.grid[e.getRow()][e.getCol()] = 'E';

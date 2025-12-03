@@ -123,10 +123,11 @@ void AI::adjustDifficulty(int waveScore, int enemiesPerWave, Enemy* enemies )
         }
     }
     // Increase enemy speed if no enemy survive in one wave
-    if ( waveScore =   10 * enemiesPerWave ) {
+    if ( waveScore =  10 * enemiesPerWave ) {
         for ( int i = 0; i < enemiesPerWave; i++ ) {
-            if ( i%2 == 0 ) {
+            if ( i%4 == 0 ) {
                 (enemies+i)->addSpeed();
+                (enemies+i)->setHealth(4);
             }
         }
     }

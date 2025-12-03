@@ -52,33 +52,47 @@ void Enemy::enemySpawned() {
 // Move enemy downward
 void Enemy::moveDown(){
     // Check enemy speed to set steps
-    if (this->speed = 1){
-        this->row ++;
-    } else {
-        this->row += 2;
+    if ( this->speed == 2 ){
+        if ( this->row < 18 ) {
+            this->row += 2;
+        } else if ( this->row == 18 ){
+            this->row++;
+        }
+    } else if ( this->speed == 1 && this->row < 19 ) { 
+        this->row ++;  
     }
 }
 
 // Move enemy diagonally down left
 void Enemy::moveDiagonalLeft(){
     // Check enemy speed to determine steps
-    if (this->speed = 1){
+    if ( this->speed == 2 ) {
+        if ( this->row < 18 && this->col > 1 ){
+            this->row += 2;
+            this->col -= 2;
+        } else if ( this->row == 18 && this->col > 0 ){
+            this->row ++;
+            this->col --;
+        }
+    } else if ( this->speed == 1 && this->row < 19 && this->col > 0 ) {
         this->row ++;
-        this->col --;
-    } else {
-        this->row += 2;
-        this->col -= 2;
+        this->col --; 
     }
 }
 
 // Move enemy diagonally down right
 void Enemy::moveDiagonalRight(){
-    if (this->speed = 1){
+    if ( this->speed == 2 ) {
+        if ( this->row < 18 && this->col < 18 ) {
+            this->row += 2;
+            this->col += 2;
+        } else if ( this->row == 18 && this->col < 19){
+            this->row ++;
+            this->col ++;
+        }
+    } else if ( this->speed == 1 && this->row < 19 && this->col < 19 ) {
         this->row ++;
         this->col ++;
-    } else {
-        this->row += 2;
-        this->col += 2;
     }
 }
 

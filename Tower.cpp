@@ -42,10 +42,14 @@ void Tower::attack(Enemy &e){
 
 void Tower::increasePower() {
     // Increment damage to an enemy
-    this->power++;
+    if ( this-> power < 3 ){
+        this->power++;
+    }    
 }
 
 void Tower::increaseRange() {
     // Increment attach range
-    this->range++;
+    if ( this->range < 4 ) {
+        this->range++;
+    } 
 }

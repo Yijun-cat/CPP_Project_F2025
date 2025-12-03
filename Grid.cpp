@@ -16,7 +16,7 @@ void Grid::initGrid(){
     }
 }
 
-// Dynamically refresh the display of grid in console 
+// Clean current display in console
 void Grid::clearConsole() {
     #ifdef _WIN32
         system("cls");
@@ -25,7 +25,7 @@ void Grid::clearConsole() {
     #endif
 }
 
-// Display the grid
+// Dynamically refresh the display of grid in console
 void Grid::displayGrid() {
     clearConsole();
     for (int r = 0; r < rows; r++) {
@@ -45,16 +45,3 @@ bool Grid::isCellEmpty(int r, int c){
     }
     return true;
 }
-
-// Check if column number of a cell is close to column number of a tower
-/*
-bool Grid::isCellNearTower(Tower* towers, int c){
-    for (int i = 0; i < 5; i++){
-        if (abs(towers[i].getCol() - c) < 3)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-*/

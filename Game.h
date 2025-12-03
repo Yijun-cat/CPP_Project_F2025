@@ -10,7 +10,7 @@ private:
     int totalWave = 5;
     int enemiesPerWave = 10;
 public:
-    void init_game(Grid &field, Castle &castle); // Generate a grid and place the castle
+    void initiateGame(Grid &field, Castle &castle); // Generate a grid and place the castle
     int getWaveNumber(); // Retrieve total number of waves
     int getEnemiesPerWave(); // Retrieve number of enemies per wave
     int readInt(const string& prompt); // only read intger input and detect invalid non-numeric input

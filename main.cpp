@@ -25,7 +25,7 @@ int main()
    
 
     //Initiate the game, create the grid and place 5 towers
-    myGame.init_game(grid, castle);
+    myGame.initiateGame(grid, castle);
     myGame.placeTower(grid, towers);
 
     // Variables for the game process

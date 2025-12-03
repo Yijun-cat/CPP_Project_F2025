@@ -15,7 +15,6 @@ class AI
 {
 private:
     // Properties of class AI
-    int enemiesPerWave = 10;
     int colSpawned[20] = {0}; // stats of column where enemy is spwaned
     int colCastleReached[20] = {0}; // stats of column where enemy reach castle row
     int colTotalDepth[20] = {0}; // max row reached in each column
