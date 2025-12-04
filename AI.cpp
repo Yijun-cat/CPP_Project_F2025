@@ -55,13 +55,10 @@ int AI::strategicColumn(Grid &field)
 
     for ( int c = 0; c < 20; c++ ) 
     {
-        if ( !field.isCellEmpty(0, c) )
-        {
+        if ( !field.isCellEmpty(0, c) ) {
             colScore[c] = -1.0; // cannot spawn in an occupied cell
         }
-
-        if (colSpawned[c] == 0 ) // No data collected in this column to evaluate performance
-        {
+        if (colSpawned[c] == 0 ){ // No data collected in this column to evaluate performance
             colScore[c] = 0.5; // set a mid score
         }
         else
@@ -71,28 +68,23 @@ int AI::strategicColumn(Grid &field)
             colScore[c] = 0.7 * survivalRate + 0.3 * (avgDepth / 19.0);// weighted average of two values
         }
     }
-
     // Find max score among valid columns
     double maxScore = -1.0;
     for ( int c = 0; c < 20; c++ ) 
     {
-        if ( colScore[c] > maxScore )
-        {
+        if ( colScore[c] > maxScore ) {
             maxScore = colScore[c];
         }
     }
-
     // Select column score >= 50% of max score
     int selectedCol[20];
     int count = 0;
     for ( int c = 0; c < 20; c++ )
     {
-        if ( colScore[c] >= 0 && colScore[c] >= 0.5 * maxScore )
-        {
+        if ( colScore[c] >= 0 && colScore[c] >= 0.5 * maxScore ) {
             selectedCol[count++] = c;
         }
     }
-
     //If no column score >= 0.5 * max score
     if ( count == 0) 
     {
@@ -105,7 +97,6 @@ int AI::strategicColumn(Grid &field)
             } 
         }
     }
-
     // Randomly choose one of selected columns
     int idx = rand() % count;
     return selectedCol[idx]; 
@@ -115,10 +106,8 @@ int AI::strategicColumn(Grid &field)
 void AI::adjustDifficulty(int waveScore, int enemiesPerWave, Enemy* enemies )
 {
     // Increase enemy health if over 80% enemies do not survive in each wave
-    if ( waveScore >= ( enemiesPerWave * 10 * 0.8) ) 
-    {
-        for ( int i = 0; i < enemiesPerWave; i++ )
-        {
+    if ( waveScore >= ( enemiesPerWave * 10 * 0.8) ) {
+        for ( int i = 0; i < enemiesPerWave; i++ ){
             (enemies+i)->addHealth();
         }
     }

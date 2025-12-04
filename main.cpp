@@ -23,7 +23,6 @@ int main()
     AI myAI;
     Enemy enemies[myGame.getEnemiesPerWave()];
    
-
     //Initiate the game, create the grid and place 5 towers
     myGame.initiateGame(grid, castle);
     myGame.placeTower(grid, towers);

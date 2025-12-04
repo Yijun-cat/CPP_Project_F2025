@@ -11,6 +11,7 @@ using namespace std;
 // Generate a grid and place the castle
 void Game::initiateGame(Grid &field, Castle &castle){
     field.initGrid();
+    //Place castle "C" in the grid
     field.grid[castle.getRow()][castle.getCol()] = 'C';
     field.displayGrid();
 } 
